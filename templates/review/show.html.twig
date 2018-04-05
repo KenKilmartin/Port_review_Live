@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Review{% endblock %}
+
+{% block body %}
+
+    <h1>Review</h1>
+
+    <table class="table table-hover" >
+
+        <tr>
+            <th>Review</th>
+            <td>{{ review.review }}</td>
+        </tr>
+        <tr>
+            <th>Place Of Purchase</th>
+            <td>{{ review.placeOfPurchase }}</td>
+        </tr>
+        <tr>
+            <th>Price Paid</th>
+            <td>{{ review.pricePaid }}</td>
+        </tr>
+        <tr>
+            <p><b> Rating : </b>
+
+
+                {% if review.numOfStars < 1 %}
+                    <img class="review_star" src="/images/half_star.png" alt="half star" height="20" width="20">
+                {% else %}
+                    {% set starsLeft = 0 %}
+
+                    {% for i in range(1, review.numOfStars, 1) %}
+
+                        <img class="review_star" src="/images/full_star.png" alt="star" height="20" width="20">
+                        {% set starsLeft = i %}
+                    {% endfor %}
+                    {%  if review.numOfStars - starsLeft != 0%}
+                        <img class="review_star" src="/images/half_star.png" alt="half star" height="20" width="20">
+                    {% endif %}
+                {% endif %}
+            <p><b>  {{ review.numOfStars }} /5 </b></p>
+            </p>
+        </tr>
+        <tr>
+            <th>User</th>
+            <td>{{ review.user }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ review.date ? review.date|date('d-m-Y') : '' }}</td>
+        </tr>
+
+        <tr>
+            <th>Votes</th>
+            {% if review.votes < 0 %}
+                <td style="color: red">{{ review.votes }}</td>
+            {% else %}
+                <td style="color: green">{{ review.votes }}</td>
+            {% endif %}
+        </tr>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <tr>
+                <th>Vote Review</th>
+            </tr>
+            <tr>
+
+                <td>
+                    <a href="{{ path('review_upvote', {'id': review.id }) }}"><img class="upVote" src="/images/up.png" alt="up" height="45" width="45"></a>
+                    <a href="{{ path('review_downvote', {'id': review.id }) }}"><img class="downVote" src="/images/down.png" alt="down" height="40" width="40"></a>
+                </td>
+            </tr>
+        {% endif %}
+
+
+    {% if is_granted('ROLE_Admin') %}
+        <tr>
+            <th>Is Public</th>
+            <td>{{ review.isPublic ? 'Yes' : 'No' }}</td>
+        </tr>
+    {% endif %}
+    </table>
+
+    <a href="{{ path('homepage') }}">back to home</a>
+    {% if is_granted('ROLE_USER') %}
+    <a href="{{ path('review_edit', {'id': review.id}) }}">edit</a>
+
+    {% include 'review/_delete_form.html.twig' with {'identifier': review.id} only %}
+    {% endif %}
+{% endblock %}

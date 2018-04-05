@@ -1,0 +1,30 @@
+easy_admin:
+    entities:
+        # List the entity class name you want to manage
+        Port:
+          class: App\Entity\Port
+          form:
+            fields: ['portName',  'photo', 'description', 'ingredients', 'priceRange', 'isPublic', ]
+        Review:
+          class: App\Entity\Review
+          form:
+            fields: ['review',  'placeOfPurchase', 'pricePaid', 'numOfStars', 'user', 'isPublic','date','port','votes', ]
+        User:
+          class: App\Entity\User
+          templates:
+            new: 'user/new.html.twig'
+          list:
+            fields: ['username', 'roles']
+          form:
+          new:
+            fields: ['username','password']
+          edit:
+            fields:
+              - username
+              - { type: 'section', label: 'Roles:', help: 'ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER', css_class: 'danger' }
+              - roles
+
+    site_name: 'A Drop Of Port'
+
+
+

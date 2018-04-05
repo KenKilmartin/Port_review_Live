@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Port{% endblock %}
+
+{% block body %}
+
+    <h1>Port</h1>
+
+    <table class="table table-hover" >
+        <tr>
+            <th>Id</th>
+            <td>{{ port.id }}</td>
+        </tr>
+        <tr>
+            <th>PortName</th>
+            <td>{{ port.portName }}</td>
+        </tr>
+        <tr>
+            <th>Photo</th>
+            <td><img class="items"  src="/images/{{ port.photo }}" alt="{{ port.photo }}"></td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ port.description }}</td>
+        </tr>
+        <tr>
+            <th>Ingredients</th>
+            <td>{{ port.ingredients }}</td>
+        </tr>
+        <tr>
+            <th>PriceRange</th>
+            <td>€ {{ port.priceRange }}</td>
+        </tr>
+        <tr>
+            <th>IsPublic</th>
+            <td>{{ port.isPublic ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            <th>ReviewedBy</th>
+            <td>{{ port.reviewedBy }}</td>
+        </tr>
+
+    </table>
+
+    <a href="{{ path('port_index') }}">back to list</a>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+    <a href="{{ path('port_edit', {'id': port.id}) }}">edit</a>
+
+    {% include 'port/_delete_form.html.twig' with {'identifier': port.id} only %}
+{% endif %}
+{% endblock %}

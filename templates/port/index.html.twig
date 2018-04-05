@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Port index{% endblock %}
+
+{% block body %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <form action="/port/processSearch" style="float: left">
+        <h4>Search by Text</h4>
+        <div>
+            <input type="search" id="mySearch" name="q">
+            <br>
+            <button>Search Port</button>
+
+        </div>
+    </form>
+
+    <form action="/port/processDateSearch" style="float: right">
+
+    <h4>Search Between Dates</h4>
+    Start Date:
+    <input type="date" name="d1">
+    <br>
+    End Date:
+    <input type="date" name="d2">
+    <br>
+    <button>Search Ports by Date</button>
+
+    </form>
+    {% endif %}
+    <h1 style="clear: both" >Port index</h1>
+    <table class="table table-hover" >
+    {% block pagination_head %}
+        <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'Port Name', 'portName') }}</th>
+                <th>Photo</th>
+                <th style="width:100px">{{ knp_pagination_sortable(pagination, 'Date', 'date') }}</th>
+                <th>Description</th>
+                <th>Ingredients</th>
+                <th style="width:60px">{{ knp_pagination_sortable(pagination, 'Price Range', 'priceRange') }}</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                <th>{{ knp_pagination_sortable(pagination, 'Submitted By', 'reviewedBy') }}</th>
+
+
+                <th>Is Public</th>
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+    {% endblock %}
+        <tbody>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% for port in pagination %}
+            <tr>
+
+                <td>{{ port.portName }}</td>
+                <td><img class="items"  src="/images/{{ port.photo }}" alt="{{ port.photo }}"></td>
+                <td>{{ port.date ? port.date|date('d-m-Y') : '' }}</td>
+                <td>{{ port.description }}</td>
+                <td>{{ port.ingredients }}</td>
+                <td>€ {{ port.priceRange }}</td>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                 <td>{{ port.reviewedBy }}</td>
+                <td>{{ port.isPublic ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('port_show', {'id': port.id}) }}">show</a>
+                    <a href="{{ path('port_edit', {'id': port.id}) }}">edit</a>
+                </td>
+            </tr>
+            {% endif %}
+            {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        {% for port in pagination if port.isPublic %}
+            <tr>
+
+            <td>{{ port.portName }}</td>
+            <td><img class="items"  src="/images/{{ port.photo }}" alt="{{ port.photo }}"></td>
+            <td>{{ port.date ? port.date|date('d-m-Y') : '' }}</td>
+            <td>{{ port.description }}</td>
+            <td>{{ port.ingredients }}</td>
+            <td>€ {{ port.priceRange }}</td>
+            {% if is_granted('ROLE_ADMIN') %}
+                <td>{{ port.reviewedBy }}</td>
+                <td>{{ port.isPublic ? 'Yes' : 'No' }}</td>
+
+
+                <td>
+                    <a href="{{ path('port_show', {'id': port.id}) }}">show</a>
+                    <a href="{{ path('port_edit', {'id': port.id}) }}">edit</a>
+                </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+{% endif %}
+        </tbody>
+    </table>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('port_new') }}">Create new</a>
+    {% endif %}
+{% endblock %}

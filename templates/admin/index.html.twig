@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Admin home</h1>
+    <li>  <a href="{{ url('admin') }}">Easy Admin</a> </li>
+    <li>  <a href="{{ url('port_index') }}">Edit Port</a> </li>
+    <li>  <a href="{{ url('review_index') }}">Edit Reviews</a> </li>
+    <li>  <a href="{{ url('user_index') }}">Edit Users</a> </li>
+
+    <h4>Port that users would like to be made public: </h4>
+    <table class="table table-hover" >
+        <thead >
+        <tr>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Title</th>
+            <th>Action</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for port in ports %}
+            <tr>
+                {% if port.doesUserWantToMakePublic == true and port.isPublic==false %}
+                    <td>{{ port.reviewedBy }}</td>
+                    <td>{{ port.date ? port.date|date('d-m-Y') : '' }}</td>
+                    <td>{{ port.portName }}</td>
+                    <td>
+                        <a href="{{ path('makePortPublic', {'id': port.id }) }}">Make Public</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('port_show', {'id': port.id}) }}">Show</a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <h4>Reviews that users would like to be made public: </h4>
+    <table class="table table-hover" >
+        <thead>
+        <tr>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Summary</th>
+            <th>Action</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for review in reviews %}
+            <tr>
+                {% if review.doesUserWantToMakePublic == true and review.isPublic==false %}
+                    <td>{{ review.user }}</td>
+                    <td>{{ review.date ? review.date|date('d-m-Y') : '' }}</td>
+                    <td>{{ review.review }}</td>
+                    <td>
+                        <a href="{{ path('makeReviewPublic', {'id': review.id }) }}">Make Public</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('review_show', {'id': review.id}) }}">Show</a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+
+{% endblock %}

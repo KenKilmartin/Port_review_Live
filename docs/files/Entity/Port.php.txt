@@ -1,0 +1,315 @@
+<?php
+/**
+ * this is the name space
+ */
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\FormTypeInterface;
+
+
+/**
+ * this class looks after Port
+ * @ORM\Entity(repositoryClass="App\Repository\PortRepository")
+ */
+class Port
+{
+    /**
+     * auto incremented id
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+    /**
+     * this is the name of the port it should restrict the limit
+     * @Assert\Length (min = 10,max = 250)
+     * @ORM\Column(type ="string")
+     */
+    private $portName;
+
+    /**
+     * this is for the Photo of image
+     * @ORM\Column(type ="string")
+     */
+    private $photo;
+    /**
+     * This is a brief description
+     * @Assert\Length (min = 10,max = 250)
+     * @ORM\Column(type ="string")
+     */
+    private $description;
+    /**
+     * this is a list of ingredients
+     * @ORM\Column(type ="string")
+     */
+    private $ingredients;
+    /**
+     * this is a number that is the price range
+     * @ORM\Column(type ="integer")
+     */
+    private $priceRange;
+
+
+    /**
+     * this is the link between port and reviews
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="port")
+     */
+    private $productReviews;
+    /**
+     * This is to see if the port is public or not
+     * @ORM\Column(type ="boolean")
+     */
+    private $isPublic;
+
+    /**
+     * this is so that can search for dates
+     * @ORM\Column(type ="datetime")
+     */
+    private $date;
+
+    /**
+     * this is if the user wants to make port private
+     * @ORM\Column(type ="boolean")
+     */
+    private $doesUserWantToMakePublic;
+
+    /**
+     * this has been reviewed by
+     * @ORM\Column(type ="string")
+     *
+     */
+    private $reviewedBy;
+
+
+
+    /**
+     * this function is to get if post is public or not
+     * @return mixed
+     */
+    public function getisPublic()
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * this function is to set if post is public or not
+     * @param mixed $isPublic
+     */
+    public function setIsPublic($isPublic): void
+    {
+        $this->isPublic = $isPublic;
+    }
+
+
+
+
+    /**
+     * this gets who it is reviewed by
+     * @return mixed
+     */
+    public function getReviewedBy()
+    {
+        return $this->reviewedBy;
+    }
+
+    /**
+     * this sets who it is reviewed by
+     * @param mixed $reviewedBy
+     */
+    public function setReviewedBy($reviewedBy): void
+    {
+        $this->reviewedBy = $reviewedBy;
+    }
+
+
+
+
+
+
+    /**
+     * this gets the id
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    /**
+     * this sets the id
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * this gets the port name
+     * @return mixed
+     */
+    public function getPortName()
+    {
+        return $this->portName;
+    }
+
+    /**
+     * this sets the port name
+     * @param mixed $portName
+     */
+    public function setPortName($portName)
+    {
+        $this->portName = $portName;
+    }
+
+    /**
+     * this gets the photo
+     * @return mixed
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * this sets the photo
+     * @param mixed $photo
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+    }
+
+    /**
+     * this gets the description
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * this sets the description
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * this gets the Ingredients
+     * @return mixed
+     */
+    public function getIngredients()
+    {
+        return $this->ingredients;
+    }
+
+    /**
+     * this sets the Ingredients
+     * @param mixed $ingredients
+     */
+    public function setIngredients($ingredients)
+    {
+        $this->ingredients = $ingredients;
+    }
+
+    /**
+     * this gets the Price
+     * @return mixed
+     */
+    public function getPriceRange()
+    {
+        return $this->priceRange;
+    }
+
+    /**
+     * this sets the Price
+     * @param mixed $priceRange
+     */
+    public function setPriceRange($priceRange)
+    {
+        $this->priceRange = $priceRange;
+    }
+
+
+
+    /**
+     * this gets Product Reviews
+     * @return mixed
+     */
+    public function getProductReviews()
+    {
+        return $this->productReviews;
+    }
+
+    /**
+     * this sets Product Reviews
+     * @param mixed $productReviews
+     */
+    public function setProductReviews($productReviews): void
+    {
+        $this->productReviews = $productReviews;
+    }
+
+    /**
+     * this gates the date
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * this sets the date
+     * @param mixed $date
+     */
+    public function setDate($date): void
+    {
+        $this->date = $date;
+    }
+    /**
+     * this is the port constructor
+     * Port constructor.
+     */
+    public function __construct()
+    {
+        $this->productReviews = new ArrayCollection();
+    }
+    /**
+     * this is a magic method
+     * @return string
+     */
+    public function __toString()
+    {
+
+        return "{$this->portName}";
+    }
+
+    /**
+     * this gets does user want make public
+     * @return mixed
+     */
+    public function getDoesUserWantToMakePublic()
+    {
+        return $this->doesUserWantToMakePublic;
+    }
+
+    /**
+     * this sets does user want make public
+     * @param mixed $doesUserWantToMakePublic
+     */
+    public function setDoesUserWantToMakePublic($doesUserWantToMakePublic): void
+    {
+        $this->doesUserWantToMakePublic = $doesUserWantToMakePublic;
+    }
+
+
+
+}
+

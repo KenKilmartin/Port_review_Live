@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}A Drop of Port{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/font-awesome.css">
+        <link rel="stylesheet" href="/css/styles.css">
+    {% endblock %}
+
+    <style>
+        .nav-log {
+            text-align: right;
+            padding: 1rem;
+            color: white;
+        }
+        body {
+            background-image: url("/images/porto.jpg");
+            background-position: 50% 50%;
+            background-repeat: repeat;
+            z-index: 1;
+        }
+        table{
+            background-color: ghostwhite;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-5">
+    <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ url('homepage') }}">
+        A drop of Port !
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a style="color: #fff;" class="nav-link" href="{{ url('myadmin') }}">Admin control panel</a>
+                </li>
+            {#{% endif %}#}
+            {% elseif is_granted('ROLE_SUPER_ADMIN') %}
+                <li class="nav-item">
+                    <a style="color: #fff;" class="nav-link" href="{{ url('admin') }}">super ADMIN</a>
+                </li>
+            {% endif %}
+
+            <li class="nav-log">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                Username:
+                <strong>{{ app.user.username }}</strong>
+                <br>
+                <a style="color: #fff;" class="nav-log" href="{{ url('logout') }}">logout</a>
+            {% else %}
+                <a style="color: #fff;" class="nav-log" href="{{ url('login') }}">login</a>
+            {% endif %}
+            </li>
+
+
+            <li class="nav-item">
+                <a style="color: #fff;" class="nav-link" href="{{ url('port_index') }}">Port list </a>
+            </li>
+            {% if is_granted('ROLE_USER') %}
+            <li class="nav-item">
+                <a style="color: #fff;" class="nav-link" href="{{ url('port_new') }}">Create NEW port</a>
+            </li>
+            {% endif %}
+            {% if is_granted('ROLE_USER') %}
+                <li class="nav-item">
+                    <a style="color: #fff;" class="nav-link" href="{{ url('review_new') }}">Create NEW review</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script>
+        $('.dropdown-toggle').dropdown();
+    </script>
+{% endblock %}
+</body>
+</html>

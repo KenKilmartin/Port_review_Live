@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 style="margin-left: 40%">Home Page</h1>
+
+    <h2 style="margin-left: 30%">
+        Welcome to the Home Page !!
+    </h2>
+
+    <div id="merch">
+       <table>
+        <thead>
+            <tr>
+
+                <th>Port Name</th>
+                <th>Photo</th>
+                <th>Description</th>
+                <th>Ingredients</th>
+                <th>Price </th>
+                <th id ="rev">Reviews</th>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                <th>Submitted By</th>
+                <th>Is Public</th>
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% for port in ports %}
+            <tr>
+
+                <td>{{ port.portName }}</td>
+                <td><img class="items"  src="/images/{{ port.photo }}" alt="{{ port.photo }}"></td>
+                <td>{{ port.description }}</td>
+                <td>{{ port.ingredients }}</td>
+                <td>€ {{ port.priceRange }}</td>
+                <td>
+                    {% for review in port.productReviews %}
+                        <a href="{{ path('review_show', {'id': review.id}) }}">review</a>
+                    {% endfor %}
+                </td>
+
+
+
+
+            {% if is_granted('ROLE_ADMIN') %}
+                 <td>{{ port.reviewedBy }}</td>
+                <td>{{ port.isPublic ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('port_show', {'id': port.id}) }}">show</a>
+                    <a href="{{ path('port_edit', {'id': port.id}) }}">edit</a>
+                </td>
+            </tr>
+            {% endif %}
+            {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        {% for port in ports if port.isPublic %}
+            <tr>
+
+            <td>{{ port.portName }}</td>
+            <td><img class="items"  src="/images/{{ port.photo }}" alt="{{ port.photo }}"></td>
+            <td>{{ port.description }}</td>
+            <td>{{ port.ingredients }}</td>
+            <td>€ {{ port.priceRange }}</td>
+            <td>
+                {% for review in port.productReviews if review.isPublic %}
+                    <a href="{{ path('review_show', {'id': review.id}) }}">review</a>
+                {% endfor %}
+            </td>
+
+
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <td>{{ port.reviewedBy }}</td>
+                <td>{{ port.isPublic ? 'Yes' : 'No' }}</td>
+
+
+                <td>
+                    <a href="{{ path('port_show', {'id': port.id}) }}">show</a>
+                    <a href="{{ path('port_edit', {'id': port.id}) }}">edit</a>
+                </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        {% endif %}
+
+        </tbody>
+
+    </table>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('port_new') }}">Create new</a>
+    {% endif %}
+{% endblock %}

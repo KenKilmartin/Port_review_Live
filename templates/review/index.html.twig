@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Review index{% endblock %}
+
+{% block body %}
+
+    <h1>Review index</h1>
+    <table class="table table-hover" >
+        <thead>
+            <tr>
+                {#<th>Port Name</th>#}
+                <th>Review</th>
+                <th>Place Of Purchase</th>
+                <th>Price Paid</th>
+                <th>Number Of Stars</th>
+                <th>User</th>
+                <th>Date</th>
+                {% if is_granted('ROLE_USER') %}
+                <th>Is Public</th>
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+    {#{% for port in ports %}#}
+        {#<td>{{ port.portName }}</td>#}
+        {#{% endfor %}#}
+            {#<tr>#}
+        {% for review in reviews %}
+                <td>{{ review.review }}</td>
+                <td>{{ review.placeOfPurchase }}</td>
+                <td>{{ review.pricePaid }}</td>
+                <td>{{ review.numOfStars }}</td>
+                <td>{{ review.user }}</td>
+                <td>{{ review.date ? review.date|date('d-m-Y') : '' }}</td>
+            {% if is_granted('ROLE_USER') %}
+                <td>{{ review.isPublic ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('review_show', {'id': review.id}) }}">show</a>
+                    <a href="{{ path('review_edit', {'id': review.id}) }}">edit</a>
+                </td>
+            </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted('ROLE_USER') %}
+    <a href="{{ path('review_new') }}">Create new</a>
+    {% endif %}
+{% endblock %}

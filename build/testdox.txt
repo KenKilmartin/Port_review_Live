@@ -1,0 +1,24 @@
+App\Tests\Controller\AdminController
+ [x] If not logged in and try access admin page
+ [x] Admin pages contain basic text 
+
+App\Tests\Controller\DefaultController
+ [x] Home page status okay
+
+App\Tests\Controller\PortController
+ [x] Port list page status okay
+ [x] New port page status okay
+ [x] Port pages contain basic text 
+
+App\Tests\Controller\ReviewController
+ [x] Review page status okay
+ [x] Review pages contain basic text 
+
+App\Tests\Controller\SecurityController
+ [x] Login page status okay
+ [x] Login on right password
+ [x] Login on wrong password
+
+App\Tests\Controller\UserController
+ [x] User pages contain basic text 
+
