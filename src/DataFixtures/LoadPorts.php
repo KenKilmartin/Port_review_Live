@@ -51,7 +51,7 @@ class LoadPorts extends Fixture
         $isPublic = array(true, false);
         $doesUserWantToMakePublic = array(true, false);
 
-        $reviewedBy = array("user", "admin", "Ken","Matt");
+        $reviewedBy = array('user', 'admin', 'Ken','Matt');
 
 
         for ($i = 0; $i < 20; $i++) {

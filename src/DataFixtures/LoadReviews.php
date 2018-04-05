@@ -31,7 +31,7 @@ class LoadReviews extends Fixture implements DependentFixtureInterface
 
         $doesUserWantToMakePublic = array(true,false);
         $isPublic = array(true,false);
-        $reviewedBy = array("User", "Admin", "Ken","Matt");
+        $reviewedBy = array('User', 'Admin', 'Ken','Matt');
 
 
         for ($i = 0; $i < 50; $i++) {
