@@ -178,7 +178,7 @@ class User implements UserInterface, \Serializable
      * this is to get reviews
      * @return mixed
      */
-    public function getReviews()   // this is causing some issue with
+    public function getReviews()
     {
         return $this->reviews;
     }
@@ -200,10 +200,10 @@ class User implements UserInterface, \Serializable
 
         return "{$this->id} {$this->username}";
     }
-//    public function __construct()
-//    {
-//        $this->reviews = new ArrayCollection();
-//    }
+    public function __construct()
+    {
+        $this->reviews = new ArrayCollection();
+    }
 
 
 }

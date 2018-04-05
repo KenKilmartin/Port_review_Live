@@ -48,7 +48,7 @@ class Review
     /**
      * this is to link to users reviews
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reviews")
-     * @ORM\Column(nullable=true)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $user;
     /**
@@ -83,7 +83,7 @@ class Review
      * this is to get user and allows for null
      * @return mixed
      */
-    public function getUser()
+    public function getUser():?User
     {
         return $this->user;
     }
@@ -92,7 +92,7 @@ class Review
      * this sets a user and allows it to be null
      * @param mixed $user
      */
-    public function setUser($user)
+    public function setUser (User $user = null): void
     {
         $this->user = $user;
     }
