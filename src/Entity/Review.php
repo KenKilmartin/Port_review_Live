@@ -79,9 +79,6 @@ class Review
     private $doesUserWantToMakePublic;
 
 
-
-
-
     /**
      * this is to get user and allows for null
      * @return mixed
@@ -249,7 +246,7 @@ class Review
     /**
      * @return mixed
      */
-    public function getVotes()
+    public function getVotes():?Vote
     {
         return $this->votes;
     }
@@ -257,10 +254,11 @@ class Review
     /**
      * @param mixed $votes
      */
-    public function setVotes($votes)
+    public function setVotes(Vote $votes = null):void
     {
         $this->votes = $votes;
     }
+
 
     /**
      * @return mixed
