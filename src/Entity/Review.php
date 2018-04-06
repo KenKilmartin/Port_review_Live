@@ -246,7 +246,7 @@ class Review
     /**
      * @return mixed
      */
-    public function getVotes():?Vote
+    public function getVotes()
     {
         return $this->votes;
     }
@@ -254,7 +254,7 @@ class Review
     /**
      * @param mixed $votes
      */
-    public function setVotes(Vote $votes = null):void
+    public function setVotes($votes)
     {
         $this->votes = $votes;
     }
