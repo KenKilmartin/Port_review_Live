@@ -31,7 +31,7 @@ class LoadReviews extends Fixture implements DependentFixtureInterface
 
         $doesUserWantToMakePublic = array(true,false);
         $isPublic = array(true,false);
-        $reviewedBy = array("User", "Admin", "Ken","Matt");
+
 
 
         for ($i = 0; $i < 50; $i++) {
@@ -39,7 +39,7 @@ class LoadReviews extends Fixture implements DependentFixtureInterface
             $manager->persist($reviews);
 
             $reviews->setPort($this->getReference(LoadPorts::Port_REFERENCE.mt_rand(0,19)));
-            $reviews->setUser ($this->getReference(LoadUsers::AUTHOR_REFERENCE.mt_rand(20,23)));                       //($reviewedBy[mt_rand(0, count($reviewedBy)-1)]);
+            $reviews->setUser ($this->getReference(LoadUsers::AUTHOR_REFERENCE.mt_rand(20,23)));
             $reviews->setDate($this->randomDate());
             $reviews->setReview($review[mt_rand(0,count($review)-1)]);
             $reviews->setPlaceOfPurchase($placeOfPurchase[mt_rand(0,count($placeOfPurchase)-1)]);

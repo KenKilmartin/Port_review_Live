@@ -198,7 +198,7 @@ class User implements UserInterface, \Serializable
     public function __toString()
     {
 
-        return "{$this->id} {$this->username}";
+        return "{$this->username}";
     }
     public function __construct()
     {

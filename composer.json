@@ -67,7 +67,7 @@
         "doc":"php phpDocumentor.phar -d src/Controller -d src/Entity -d src/Util -t docs ",
         "create":"php bin/console doctrine:database:create",
         "fix":"php bin/console doctrine:fixtures:load",
-        "update": "php bin/console doctrine:schema:update --force",
+        "force": "php bin/console doctrine:schema:update --force",
 
 
         "auto-scripts": {
