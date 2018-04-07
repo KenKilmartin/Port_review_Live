@@ -103,6 +103,12 @@
 {% endif %}
         </tbody>
     </table>
+
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
     {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('port_new') }}">Create new</a>
     {% endif %}
